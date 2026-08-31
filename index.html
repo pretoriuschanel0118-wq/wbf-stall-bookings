@@ -101,12 +101,6 @@
 </style>
 </head>
 <body>
-<script>
-window.WBF_SUPABASE_URL = 'https://pfnyxorybihhiuxikvml.supabase.co';
-window.WBF_SUPABASE_KEY = 'sb_publishable_gTo4T9W9TY2jj8CV7WcX5w_sDOtxwZl';
-window.WBF_LIVE_DATABASE_CONFIGURED = true;
-</script>
-
 <div class="app">
 <header>
   <div class="header-inner">
@@ -231,7 +225,7 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
   </section>
 </main>
 
-<footer>Wees Bees Fees 2026 • Prototype booking interface. The supplied event layout is embedded unchanged as the visual base.</footer>
+<footer>Wees Bees Fees 2026 • Live online booking system. The supplied event layout is embedded unchanged as the visual base.</footer>
 
 <div id="modalRoot"></div>
 
@@ -242,8 +236,8 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
    1) Replace the two placeholders below with your Supabase project URL/key.
    2) Run schema.sql in Supabase SQL Editor.
    ========================================================= */
-const SUPABASE_URL = "YOUR_SUPABASE_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const SUPABASE_URL = "https://pfnyxorybihhiuxikvml.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_gTo4T9W9TY2jj8CV7WcX5w_sDOtxwZl";
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const ADMIN_EMAIL = "info@weesbeesfees.co.za";
@@ -399,7 +393,7 @@ function renderAdminStalls(){document.getElementById("adminStallsTab").innerHTML
 function adminTab(name,btn){document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));btn.classList.add("active");["adminVendorsTab","adminStallsTab","adminMapTab"].forEach(x=>document.getElementById(x).classList.add("hidden"));document.getElementById({vendors:"adminVendorsTab",stalls:"adminStallsTab",map:"adminMapTab"}[name]).classList.remove("hidden");if(name==="map")renderMap("adminMapStage",true)}
 async function cancelBooking(id){const b=cache.bookings.find(x=>x.id===id);if(!b)return;if(!confirm(`Cancel booking for ${b.business} — ${b.stallId}?`))return;const {error}=await sb.rpc("cancel_booking",{p_booking_id:id});if(error)return alert(error.message);await route()}
 async function changeBooking(id){const b=cache.bookings.find(x=>x.id===id);if(!b)return;const available=allStalls().filter(s=>s.id!==b.stallId&&!isBooked(s.id)&&!isBlocked(s.id));if(!available.length)return alert("No available stalls.");const choice=prompt("Enter the new stall number (for example S12 or FM7):",available[0].id);if(!choice)return;const newId=choice.trim().toUpperCase();if(!available.some(s=>s.id===newId))return alert("That stall is not available.");const stall=allStalls().find(s=>s.id===newId);let size=b.size;if(stall.type==="FM")size="3x3M";if(stall.type==="S"&&!stall.sizes.includes(size))size="5x3M";const {error}=await sb.rpc("move_booking",{p_booking_id:id,p_new_stall_id:newId,p_new_size:size});if(error)return alert(error.message);await route();alert(`Booking moved to ${newId}.`)}
-async function toggleBlock(stallId){if(PRE_BLOCKED_STALLS.includes(stallId))return alert(`${stallId} is permanently blocked.`);const blocked=isBlocked(stallId);const {error}=blocked?await sb.from("stall_blocks").delete().eq("stall_id",stallId):await sb.from("stall_blocks").insert({stall_id:stallId});if(error)return alert(error.message);await route()}
+async function toggleBlock(stallId){if(PRE_BLOCKED_STALLS.includes(stallId))return alert(`${stallId} is permanently blocked.`);const blocked=isBlocked(stallId);const {error}=await sb.rpc("set_stall_block",{p_stall_id:stallId,p_blocked:!blocked});if(error)return alert(error.message);await route()}
 function adminStallAction(stallId){const b=getBooking(stallId),blocked=isBlocked(stallId);let html=`<div class="modal-backdrop"><div class="modal"><h3>${stallId}</h3><p>${blocked?'<span class="badge badge-gray">BLOCKED</span>':b?'<span class="badge badge-red">BOOKED</span>':'<span class="badge badge-green">AVAILABLE</span>'}</p>`;if(b)html+=`<div class="summary"><div><small>Business</small><strong>${esc(b.business)}</strong></div><div><small>Contact</small><strong>${esc(b.contact)}</strong></div><div><small>Phone</small><strong>${esc(b.phone)}</strong></div><div class="selling-info"><small>WHAT THEY ARE SELLING</small><strong>${esc(b.sell)}</strong></div><div><small>Size</small><strong>${esc(b.size)}</strong></div></div>`;html+=`<div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal()">Close</button>`;if(b)html+=`<button class="btn btn-danger" onclick="closeModal();cancelBooking('${b.id}')">Cancel booking</button><button class="btn btn-secondary" onclick="closeModal();changeBooking('${b.id}')">Change stall</button>`;if(!PRE_BLOCKED_STALLS.includes(stallId))html+=`<button class="btn ${blocked?"btn-primary":"btn-dark"}" onclick="closeModal();toggleBlock('${stallId}')">${blocked?"Unblock":"Block"} stall</button>`;html+=`</div></div></div>`;document.getElementById("modalRoot").innerHTML=html}
 function exportCSV(){const rows=[["Stall","Stall type","Size","Business / Stall Name","Contact Person","Cellphone","Email","What They Sell","Booked At"]];cache.bookings.forEach(b=>rows.push([b.stallId,b.stallId.startsWith("FM")?"Flea Market":"Vendor",b.size,b.business,b.contact,b.phone,b.email,b.sell,b.bookedAt]));const csv=rows.map(r=>r.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="wees-bees-fees-vendor-bookings.csv";a.click();URL.revokeObjectURL(url)}
 
