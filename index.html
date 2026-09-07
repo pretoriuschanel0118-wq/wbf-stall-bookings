@@ -364,9 +364,14 @@ async function setUserSession(user){
 async function logout(){await sb.auth.signOut();session=null;sessionStorage.removeItem("wbf_session");selectedStall=null;updateNav();showOnly(null);document.getElementById("landing").classList.remove("hidden")}
 
 // Auth state is the source of truth; do not store passwords in browser storage.
-sb.auth.onAuthStateChange(async (_event,authSession)=>{
-  if(authSession?.user){session={role:"vendor",userId:authSession.user.id};sessionStorage.setItem("wbf_session",JSON.stringify(session));}
-  else{session=null;sessionStorage.removeItem("wbf_session")}
+sb.auth.onAuthStateChange((_event,authSession)=>{
+  // Login functions and the startup check handle routing.
+  // This listener only clears the local session when Supabase signs out.
+  if(!authSession?.user){
+    session=null;
+    sessionStorage.removeItem("wbf_session");
+    updateNav();
+  }
 });
 
 async function registerVendor(e){
@@ -436,7 +441,7 @@ async function toggleBlock(stallId){const blocked=isBlocked(stallId);if(!blocked
 function exportCSV(){const rows=[["Stall","Stall type","Size","Business / Stall Name","Contact Person","Cellphone","Email","What They Sell","Booked At"]];cache.bookings.forEach(b=>rows.push([b.stallId,b.stallId.startsWith("FM")?"Flea Market":"Vendor",b.size,b.business,b.contact,b.phone,b.email,b.sell,b.bookedAt]));const csv=rows.map(r=>r.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="wees-bees-fees-vendor-bookings.csv";a.click();URL.revokeObjectURL(url)}
 
 // Start: restore Supabase auth session.
-(async()=>{const {data}=await sb.auth.getSession();if(data.session){session={role:"vendor",userId:data.session.user.id};await setUserSession(data.session.user)}else route()})();
+(async()=>{const {data}=await sb.auth.getSession();if(data.session){await setUserSession(data.session.user)}else route()})();
 
 // Live refresh: every open page re-reads the central database after changes.
 setInterval(async()=>{if(session){try{await loadData();if(session.role==="vendor"){renderVendor()}else{renderAdmin()}}catch(e){console.error(e)}}},5000);
