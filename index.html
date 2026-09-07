@@ -204,13 +204,39 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
         <div class="legend-item"><i class="dot selected"></i>Your selection</div>
         
       </div>
+      <div class="map-section-title">Slide 2 — C Hockey & A Rugby Main Layout</div>
+      <div class="muted" style="margin-bottom:8px">Only the S-stalls on this slide are interactive. Flea Market stalls are shown on Slide 3.</div>
       <div class="map-wrap"><div class="map-stage" id="vendorMapStage"></div></div>
-      <div class="legend" style="margin:12px 4px 2px">
-        <div class="legend-item"><i class="dot electricity"></i>Green - stalls with electricity</div>
-        <div class="legend-item"><i class="dot normal"></i>Yellow - Normal stalls</div>
-        <div class="legend-item"><i class="dot fleemarket"></i>Orange - Fleemarket stalls</div>
+
+      <div class="map-section-title" style="margin-top:18px">Slide 3 — Flea Market Stalls</div>
+      <div class="muted" style="margin-bottom:8px">Flea Market stalls are interactive here only.</div>
+      <div class="map-wrap"><div class="fm-map-stage" id="vendorFMMapStage"></div></div>
+
+      <div class="map-section-title" style="margin-top:18px">Slide 4 — Key</div>
+      <div class="key-table">
+        <div class="key-row"><b>S- Blocks – Yellow</b><span>Provision for Stalls – 3mx5m or 5mx10m – No Power</span></div>
+        <div class="key-row"><b>S- Blocks – Green</b><span>Provision for Stalls – 3mx5m or 5mx10m – Power can be provided here</span></div>
+        <div class="key-row"><b>Uitstal- blocks</b><span>Provision for various exhibitionists</span></div>
+        <div class="key-row"><b>FM Stalls 1–12 Covered</b><span>These Flea Market stalls are 3mx3m and under a Marque tent</span></div>
+        <div class="key-row"><b>FM Stalls 13–24 Covered</b><span>These Flea Market stalls are 3mx3m and under a Marque tent</span></div>
+        <div class="key-row"><b>FM Stalls 25–36 Uncovered</b><span>These Flea Market stalls are 3mx3m and not covered – must bring own gazebo or open air – gazebo not bigger than 3mx3m</span></div>
+        <div class="key-row"><b>Green FM Stalls</b><span>These Flea Market Stalls can be provided with power</span></div>
+        <div class="key-row"><b>Yellow FM Stalls</b><span>These Flea Market stalls has no provision for power</span></div>
+        <div class="key-row"><b>P1–P3</b><span>Potjiekos Gazebo Provision</span></div>
+        <div class="key-row"><b>Biertent</b><span>Provision for Liquor sales and seating (covered)</span></div>
+        <div class="key-row"><b>Seating Area</b><span>Provision for seating – tables and chairs (covered)</span></div>
+        <div class="key-row"><b>Stage</b><span>Stage for Performances</span></div>
+        <div class="key-row"><b>Kunstenaaar Parkering</b><span>Enclosed area where artist will be parked during performances</span></div>
+        <div class="key-row"><b>Sound</b><span>Stage sound management team – gazebo</span></div>
+        <div class="key-row"><b>Bul</b><span>Mechanical Bull Entertainment</span></div>
+        <div class="key-row"><b>Fototent</b><span>Photo Area – photos with artists</span></div>
+        <div class="key-row"><b>Boeresport Area</b><span>Boeresport, Skaapskeer, Open Standing Area</span></div>
+        <div class="key-row"><b>Entry</b><span>Open space for vehicles to gain entry</span></div>
+        <div class="key-row"><b>Lasertag</b><span>Laser Tag Area</span></div>
+        <div class="key-row"><b>Kinderarea</b><span>Children’s playing area</span></div>
+        <div class="key-row"><b>Jumbo Slide Area</b><span>Jumbo Slide and Jumping Castle</span></div>
       </div>
-      <div class="notice" style="margin-top:10px;text-align:center">Queries: <a href="mailto:info@weesbeesfees.co.za">info@weesbeesfees.co.za</a></div>
+      <div class="notice" style="margin-top:14px;text-align:center">Queries: <a href="mailto:info@weesbeesfees.co.za">info@weesbeesfees.co.za</a></div>
     </div>
     <div class="card" style="margin-top:16px">
       <h3>My bookings</h3>
@@ -388,7 +414,7 @@ function resetZoom(){mapZoom=1;if(session?.role==="admin"){renderMap("adminMapSt
 function selectStall(stallId){if(isBooked(stallId))return;selectedStall=stallId;renderMap("vendorMapStage");renderFMMap("vendorFMMapStage");const stall=allStalls().find(s=>s.id===stallId),v=currentVendor();openConfirmModal(v,stall)}
 function showBookedStallInfo(stallId){const booking=getBooking(stallId);if(!booking)return;document.getElementById("modalRoot").innerHTML=`<div class="modal-backdrop"><div class="modal"><h3>Stall ${esc(stallId)} — Already Booked</h3><p class="muted">This stall is unavailable for booking, but you can see what the vendor is selling.</p><div class="summary"><div><small>Vendor / business</small><strong>${esc(booking.business)}</strong></div><div><small>Contact person</small><strong>${esc(booking.contact)}</strong></div><div class="selling-info"><small>WHAT THIS VENDOR IS SELLING</small><strong>${esc(booking.sell)}</strong></div><div><small>Stall type</small><strong>${esc(booking.size)}</strong></div></div><div class="notice">🔴 Booked stalls cannot be selected. Tap another green stall to make your own booking.</div><div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal()">Close</button></div></div></div>`}
 function openConfirmModal(v,stall){const sizeOptions=stall.type==="S"?`<div class="field"><label>Stall type *</label><select id="confirmSize"><option value="5x3M">5x3M</option><option value="5x10M">5x10M</option></select></div>`:`<div class="field"><label>Stall type</label><input value="3x3M" disabled></div>`;document.getElementById("modalRoot").innerHTML=`<div class="modal-backdrop"><div class="modal"><h3>Confirm stall booking</h3><p class="muted">Please check all information before saving. Stall <b>${esc(stall.label)}</b> will become unavailable after confirmation.</p><div class="summary"><div><small>Vendor / business</small><strong>${esc(v.business)}</strong></div><div><small>Contact person</small><strong>${esc(v.contact)}</strong></div><div><small>Phone number</small><strong>${esc(v.phone)}</strong></div><div><small>What they sell</small><strong>${esc(v.sell)}</strong></div><div><small>Selected stall</small><strong>${esc(stall.label)}</strong></div></div>${sizeOptions}<div class="notice">The live database will check the stall again at the moment of confirmation. This prevents two vendors from booking the same stall.</div><div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="confirmBooking('${stall.id}')">Confirm & Book Stall</button></div></div></div>`}
-function closeModal(){document.getElementById("modalRoot").innerHTML="";selectedStall=null;if(session?.role==="vendor")renderMap("vendorMapStage")}
+function closeModal(){document.getElementById("modalRoot").innerHTML="";selectedStall=null;if(session?.role==="vendor"){renderMap("vendorMapStage");renderFMMap("vendorFMMapStage")}}
 async function confirmBooking(stallId){
  if(isBooked(stallId)){closeModal();alert("Sorry, that stall is no longer available.");await route();return}
  const v=currentVendor(),stall=allStalls().find(s=>s.id===stallId);if(!v||!stall)return;
