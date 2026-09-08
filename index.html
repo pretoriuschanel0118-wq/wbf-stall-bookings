@@ -43,11 +43,11 @@
   .map-wrap{background:#0d4f6b;border-radius:12px;padding:8px;overflow:auto;touch-action:pan-x pan-y}
   .map-stage{position:relative;width:1280px;max-width:none;line-height:0}
   .map-stage img{display:block;width:1280px;height:720px;max-width:none;user-select:none}
-  .stall{position:absolute;border:0!important;outline:0!important;background:transparent!important;z-index:3;cursor:pointer;transition:.15s;line-height:normal;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;box-shadow:none!important;padding:0;margin:0}
-  .stall:hover{background:transparent!important;z-index:5}
-  .stall.booked{background:rgba(211,58,50,.82)!important;cursor:not-allowed;border:0!important;outline:0!important}
-  .stall.blocked{background:rgba(90,90,90,.78)!important;cursor:not-allowed;border:0!important;outline:0!important;color:#fff}
-  .stall.selected{background:transparent!important;border:0!important;box-shadow:none!important;color:inherit;z-index:6}
+  .stall{position:absolute;border:2px solid rgba(38,180,90,.95);background:transparent;z-index:3;cursor:pointer;transition:.15s;line-height:normal;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55)}
+  .stall:hover{background:rgba(50,180,90,.16);border-color:#0b5c2e;z-index:5}
+  .stall.booked{background:rgba(211,58,50,.82);cursor:not-allowed;border-color:#a52c27}
+  .stall.blocked{background:rgba(90,90,90,.78);cursor:not-allowed;border-color:#333;color:#fff}
+  .stall.selected{background:rgba(30,120,255,.16);border-color:#0877ff;box-shadow:inset 0 0 0 3px rgba(8,119,255,.9),0 0 0 2px rgba(8,119,255,.55);color:#073b6d;z-index:6}
   
   .stall-label{font-size:clamp(8px,1vw,12px);font-weight:900;text-shadow:0 1px rgba(255,255,255,.45);white-space:nowrap}
   .stall.fm-stall .stall-label{font-size:5px;letter-spacing:-.25px}
@@ -130,7 +130,7 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
 <header>
   <div class="header-inner">
     <div class="brand"><span class="bee" aria-label="Agriculture">🚜</span><div><h1>Wees Bees Fees 2026</h1><small>Vendor Stall Booking</small></div></div>
-    <div class="nav" id="nav"><button class="btn btn-secondary" onclick="showAuth('vendor')">Vendor Login</button><button class="btn btn-primary" onclick="showAuth('register')">Register</button><button class="btn btn-ghost" onclick="showAuth('admin')">Admin</button></div>
+    <div class="nav" id="nav"></div>
   </div>
 </header>
 
@@ -142,7 +142,7 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
       <p>Register your business, choose an available stall directly on the official event layout, and confirm your booking.</p>
       <div class="steps">
         <div class="step"><b>1. Register</b>Enter your business and contact details.</div>
-        <div class="step"><b>2. Select</b>Green stalls are available. Red stalls are booked. Blue highlight shows your selection.</div>
+        <div class="step"><b>2. Select</b>Green outline = available, red = booked, blue outline = your selection. The original map colours remain visible.</div>
         <div class="step"><b>3. Confirm</b>Review the booking before it is saved.</div>
       </div>
     </div>
@@ -158,7 +158,7 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
     </div>
   </section>
 
-  <section id="authView" class="auth card hidden">
+  <section id="authView" class="auth card">
     <div class="auth-toggle">
       <button class="btn btn-primary" id="vendorAuthTab" onclick="showAuth('vendor')">Vendor Login</button>
       <button class="btn btn-secondary" id="registerAuthTab" onclick="showAuth('register')">Register</button>
@@ -207,7 +207,7 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
     </div>
     <div class="card map-card" style="margin-top:16px">
       <div class="map-toolbar">
-        <div><b>Choose a stall</b><div class="zoom-note">Tap/click any stall on the map to select it. Tap a booked stall to see what that vendor is selling.</div></div>
+        <div><b>Choose a stall</b><div class="zoom-note">Tap/click any stall with a green outline. The original map colours are preserved. Tap a red booked stall to see what that vendor is selling.</div></div>
         <div class="actions">
           <button class="btn btn-secondary" onclick="zoomMap(0.9)">− Zoom</button>
           <button class="btn btn-secondary" onclick="zoomMap(1.1)">+ Zoom</button>
@@ -312,68 +312,30 @@ const stallRects = {};
 const fmRects = {};
 const FALLBACK_RECTS = {};
 
-// Slide 2 — S-stalls. Exact clickable polygons follow the supplied Slide 2 artwork.
+// Slide 2 — S-stalls. These are the only interactive stalls on Slide 2.
 Object.assign(FALLBACK_RECTS, {
-  S1:{x:524,y:616,w:30,h:31,clip:"polygon(10.00% 0.00%, 0.00% 96.77%, 96.67% 96.77%, 96.67% 3.23%)"},
-  S2:{x:492,y:612,w:32,h:35,clip:"polygon(15.62% 0.00%, 0.00% 85.71%, 34.38% 94.29%, 90.62% 97.14%, 96.88% 14.29%, 87.50% 8.57%)"},
-  S3:{x:458,y:605,w:36,h:38,clip:"polygon(22.22% 0.00%, 0.00% 73.68%, 41.67% 89.47%, 83.33% 97.37%, 97.22% 18.42%)"},
-  S4:{x:427,y:593,w:37,h:40,clip:"polygon(29.73% 0.00%, 0.00% 67.50%, 45.95% 90.00%, 75.68% 97.50%, 97.30% 27.50%)"},
-  S5:{x:397,y:576,w:39,h:44,clip:"polygon(35.90% 0.00%, 0.00% 59.09%, 30.77% 79.55%, 69.23% 97.73%, 97.44% 31.82%, 43.59% 0.00%)"},
-  S6:{x:369,y:554,w:41,h:47,clip:"polygon(43.90% 0.00%, 0.00% 53.19%, 60.98% 97.87%, 97.56% 40.43%)"},
-  S7:{x:345,y:530,w:41,h:47,clip:"polygon(51.22% 0.00%, 0.00% 46.81%, 56.10% 97.87%, 97.56% 46.81%)"},
-  S8:{x:324,y:503,w:41,h:47,clip:"polygon(56.10% 0.00%, 0.00% 36.17%, 21.95% 70.21%, 46.34% 97.87%, 97.56% 55.32%)"},
-  S9:{x:307,y:473,w:39,h:46,clip:"polygon(64.10% 0.00%, 0.00% 30.43%, 38.46% 97.83%, 97.44% 60.87%)"},
-  S10:{x:295,y:442,w:35,h:42,clip:"polygon(65.71% 0.00%, 62.86% 4.76%, 51.43% 4.76%, 0.00% 23.81%, 2.86% 40.48%, 31.43% 97.62%, 97.14% 69.05%, 71.43% 2.38%)"},
-  S11:{x:286,y:409,w:34,h:39,clip:"polygon(76.47% 0.00%, 0.00% 15.38%, 11.76% 71.79%, 23.53% 97.44%, 35.29% 97.44%, 97.06% 74.36%)"},
-  S12:{x:282,y:374,w:31,h:38,clip:"polygon(83.87% 0.00%, 0.00% 7.89%, 6.45% 84.21%, 12.90% 97.37%, 96.77% 81.58%)"},
-  S13:{x:282,y:338,w:28,h:36,clip:"polygon(3.57% 0.00%, 0.00% 94.44%, 92.86% 91.67%, 96.43% 8.33%, 64.29% 0.00%)"},
-  S14:{x:283,y:300,w:31,h:37,clip:"polygon(16.13% 0.00%, 3.23% 45.95%, 0.00% 89.19%, 16.13% 94.59%, 83.87% 97.30%, 96.77% 18.92%, 83.87% 10.81%)"},
-  S15:{x:288,y:262,w:34,h:41,clip:"polygon(26.47% 0.00%, 0.00% 78.05%, 11.76% 85.37%, 76.47% 97.56%, 97.06% 24.39%)"},
-  S16:{x:298,y:226,w:37,h:44,clip:"polygon(32.43% 0.00%, 0.00% 75.00%, 67.57% 97.73%, 97.30% 31.82%)"},
-  S17:{x:312,y:193,w:39,h:46,clip:"polygon(43.59% 0.00%, 15.38% 36.96%, 0.00% 67.39%, 61.54% 97.83%, 97.44% 39.13%)"},
-  S18:{x:330,y:163,w:40,h:47,clip:"polygon(50.00% 0.00%, 30.00% 19.15%, 0.00% 59.57%, 52.50% 97.87%, 97.50% 44.68%)"},
-  S19:{x:352,y:137,w:41,h:47,clip:"polygon(56.10% 0.00%, 0.00% 51.06%, 46.34% 97.87%, 97.56% 55.32%)"},
-  S20:{x:377,y:115,w:40,h:46,clip:"polygon(62.50% 0.00%, 0.00% 43.48%, 42.50% 97.83%, 97.50% 60.87%)"},
-  S21:{x:405,y:97,w:39,h:44,clip:"polygon(69.23% 0.00%, 0.00% 36.36%, 35.90% 97.73%, 97.44% 65.91%)"},
-  S22:{x:435,y:84,w:37,h:41,clip:"polygon(1245.95% -26.83%, 1245.95% 48.78%, 1318.92% 48.78%, 1318.92% -26.83%)"},
-  S23:{x:467,y:76,w:35,h:38,clip:"polygon(620.00% -7.89%, 620.00% 73.68%, 697.14% 73.68%, 697.14% -7.89%)"},
-  S24:{x:501,y:73,w:32,h:35,clip:"polygon(106.25% 0.00%, 103.12% 85.71%, 187.50% 88.57%, 187.50% 0.00%)"},
-  S25:{x:534,y:72,w:28,h:33,clip:"polygon(3.57% 3.03%, 0.00% 93.94%, 96.43% 96.97%, 96.43% 3.03%)"},
-  S26:{x:564,y:72,w:28,h:33,clip:"polygon(0.00% 3.03%, 0.00% 96.97%, 96.43% 96.97%, 96.43% 3.03%)"},
-  S27:{x:594,y:72,w:28,h:33,clip:"polygon(0.00% 3.03%, 0.00% 96.97%, 96.43% 96.97%, 96.43% 3.03%)"},
-  S28:{x:624,y:72,w:28,h:33,clip:"polygon(0.00% 3.03%, 0.00% 96.97%, 96.43% 96.97%, 96.43% 3.03%)"},
-  S29:{x:654,y:72,w:28,h:33,clip:"polygon(0.00% 3.03%, 0.00% 96.97%, 96.43% 96.97%, 96.43% 3.03%)"},
-  S30:{x:684,y:72,w:28,h:33,clip:"polygon(0.00% 3.03%, 0.00% 96.97%, 96.43% 96.97%, 96.43% 3.03%)"},
-  S31:{x:776,y:72,w:28,h:33,clip:"polygon(0.00% 3.03%, 0.00% 96.97%, 96.43% 96.97%, 96.43% 3.03%)"},
-  S32:{x:806,y:72,w:28,h:33,clip:"polygon(0.00% 3.03%, 0.00% 96.97%, 96.43% 96.97%, 96.43% 3.03%)"},
-  S33:{x:836,y:72,w:28,h:33,clip:"polygon(0.00% 3.03%, 0.00% 96.97%, 96.43% 96.97%, 96.43% 3.03%)"},
-  S34:{x:866,y:72,w:28,h:33,clip:"polygon(0.00% 3.03%, 0.00% 96.97%, 96.43% 96.97%, 96.43% 3.03%)"},
-  S35:{x:896,y:72,w:28,h:33,clip:"polygon(0.00% 3.03%, 0.00% 96.97%, 96.43% 96.97%, 96.43% 3.03%)"},
-  S36:{x:926,y:73,w:30,h:33,clip:"polygon(0.00% 0.00%, 0.00% 93.94%, 86.67% 96.97%, 96.67% 6.06%, 60.00% 0.00%)"},
-  S37:{x:956,y:75,w:34,h:37,clip:"polygon(8.82% 0.00%, 0.00% 81.08%, 76.47% 97.30%, 97.06% 16.22%)"},
-  S38:{x:986,y:82,w:37,h:41,clip:"polygon(-324.32% -21.95%, -324.32% 53.66%, -251.35% 53.66%, -251.35% -21.95%)"},
-  S39:{x:1015,y:94,w:38,h:43,clip:"polygon(26.32% 0.00%, 0.00% 67.44%, 63.16% 97.67%, 97.37% 34.88%)"},
-  S40:{x:1042,y:110,w:40,h:46,clip:"polygon(32.50% 0.00%, 0.00% 60.87%, 57.50% 97.83%, 97.50% 41.30%)"},
-  S41:{x:1067,y:131,w:41,h:47,clip:"polygon(39.02% 0.00%, 0.00% 55.32%, 51.22% 97.87%, 97.56% 48.94%)"},
-  S42:{x:1090,y:157,w:40,h:47,clip:"polygon(47.50% 0.00%, 0.00% 46.81%, 45.00% 97.87%, 97.50% 59.57%, 82.50% 36.17%)"},
-  S43:{x:1110,y:186,w:39,h:46,clip:"polygon(53.85% 0.00%, 0.00% 41.30%, 35.90% 97.83%, 97.44% 65.22%)"},
-  S44:{x:1126,y:218,w:38,h:45,clip:"polygon(63.16% 0.00%, 0.00% 33.33%, 31.58% 97.78%, 97.37% 73.33%)"},
-  S45:{x:1139,y:253,w:36,h:43,clip:"polygon(-2308.33% 281.40%, -2380.56% 288.37%, -2375.00% 355.81%, -2369.44% 367.44%, -2297.22% 353.49%)"},
-  S46:{x:1150,y:290,w:31,h:40,clip:"polygon(77.42% 0.00%, 0.00% 20.00%, 16.13% 97.50%, 83.87% 92.50%, 96.77% 87.50%, 93.55% 50.00%)"},
-  S47:{x:1154,y:329,w:30,h:35,clip:"polygon(86.67% 0.00%, 0.00% 11.43%, 3.33% 88.57%, 10.00% 97.14%, 93.33% 97.14%, 96.67% 62.86%)"},
-  S48:{x:1153,y:367,w:31,h:36,clip:"polygon(9.68% 0.00%, 0.00% 83.33%, 12.90% 88.89%, 83.87% 97.22%, 90.32% 83.33%, 93.55% 2.78%)"},
-  S49:{x:1148,y:402,w:32,h:38,clip:"polygon(15.62% 0.00%, 0.00% 76.32%, 6.25% 81.58%, 75.00% 97.37%, 84.38% 76.32%, 96.88% 13.16%, 81.25% 5.26%)"},
-  S50:{x:1137,y:434,w:35,h:44,clip:"polygon(28.57% 0.00%, 0.00% 61.36%, 0.00% 70.45%, 65.71% 97.73%, 91.43% 47.73%, 97.14% 18.18%)"},
-  S51:{x:1123,y:468,w:37,h:43,clip:"polygon(32.43% 0.00%, 0.00% 62.79%, 59.46% 97.67%, 89.19% 51.16%, 97.30% 25.58%, 40.54% 0.00%)"},
-  S52:{x:1105,y:498,w:38,h:44,clip:"polygon(42.11% 0.00%, 0.00% 56.82%, 47.37% 97.73%, 52.63% 97.73%, 92.11% 47.73%, 97.37% 31.82%)"},
-  S53:{x:1085,y:525,w:38,h:46,clip:"polygon(50.00% 0.00%, 44.74% 0.00%, 0.00% 45.65%, 2.63% 56.52%, 44.74% 97.83%, 97.37% 45.65%, 97.37% 39.13%)"},
-  S54:{x:1061,y:550,w:39,h:45,clip:"polygon(53.85% 0.00%, 0.00% 42.22%, 2.56% 51.11%, 38.46% 97.78%, 97.44% 53.33%, 94.87% 42.22%)"},
-  S55:{x:1034,y:571,w:41,h:45,clip:"polygon(58.54% 0.00%, 0.00% 35.56%, 31.71% 97.78%, 97.56% 57.78%)"},
-  S56:{x:1007,y:588,w:38,h:43,clip:"polygon(65.79% 0.00%, 0.00% 30.23%, 23.68% 97.67%, 97.37% 67.44%)"},
-  S57:{x:978,y:603,w:36,h:39,clip:"polygon(75.00% 0.00%, 0.00% 20.51%, 11.11% 66.67%, 11.11% 87.18%, 19.44% 97.44%, 94.44% 74.36%, 97.22% 69.23%, 80.56% 28.21%)"},
-  S58:{x:948,y:612,w:33,h:35,clip:"polygon(81.82% 0.00%, 0.00% 11.43%, 0.00% 51.43%, 9.09% 97.14%, 84.85% 88.57%, 96.97% 82.86%)"},
-  S59:{x:918,y:616,w:29,h:31,clip:"polygon(89.66% 0.00%, 0.00% 3.23%, 0.00% 96.77%, 96.55% 96.77%)"}
-});
+  // Slide 2 — exact stall areas, aligned to the supplied artwork.
+  S1:{x:523,y:615,w:35,h:35}, S2:{x:490,y:603,w:38,h:44}, S3:{x:455,y:595,w:38,h:46},
+  S4:{x:424,y:588,w:40,h:45}, S5:{x:392,y:570,w:43,h:48}, S6:{x:363,y:545,w:45,h:50},
+  S7:{x:340,y:518,w:43,h:48}, S8:{x:318,y:484,w:43,h:49}, S9:{x:302,y:449,w:40,h:49},
+  S10:{x:290,y:442,w:39,h:42}, S11:{x:285,y:408,w:35,h:40}, S12:{x:280,y:373,w:33,h:40},
+  S13:{x:280,y:336,w:33,h:40}, S14:{x:282,y:299,w:34,h:40}, S15:{x:287,y:261,w:35,h:41},
+  S16:{x:296,y:225,w:38,h:44}, S17:{x:311,y:193,w:38,h:45}, S18:{x:329,y:165,w:42,h:44},
+  S19:{x:351,y:139,w:41,h:43}, S20:{x:377,y:116,w:39,h:44}, S21:{x:406,y:97,w:39,h:43},
+  S22:{x:435,y:85,w:39,h:38},
+  S23:{x:466,y:72,w:37,h:40}, S24:{x:500,y:72,w:33,h:38}, S25:{x:534,y:72,w:28,h:33},
+  S26:{x:564,y:72,w:28,h:33}, S27:{x:594,y:72,w:28,h:34}, S28:{x:624,y:72,w:28,h:33},
+  S29:{x:654,y:72,w:28,h:33}, S30:{x:684,y:72,w:28,h:33},
+  S31:{x:776,y:72,w:28,h:34}, S32:{x:806,y:72,w:28,h:34}, S33:{x:836,y:72,w:28,h:34},
+  S34:{x:866,y:72,w:28,h:34}, S35:{x:896,y:72,w:28,h:34}, S36:{x:926,y:73,w:29,h:33}, S37:{x:956,y:75,w:34,h:38},
+  S38:{x:986,y:82,w:38,h:41}, S39:{x:1015,y:94,w:39,h:42}, S40:{x:1041,y:116,w:41,h:42},
+  S41:{x:1067,y:149,w:40,h:31}, S42:{x:1093,y:179,w:38,h:46}, S43:{x:1126,y:218,w:39,h:45},
+  S44:{x:1139,y:254,w:37,h:43}, S45:{x:1150,y:290,w:31,h:40}, S46:{x:1154,y:329,w:30,h:36},
+  S47:{x:1153,y:367,w:31,h:36}, S48:{x:1149,y:403,w:30,h:37}, S49:{x:1137,y:436,w:35,h:41},
+  S50:{x:1124,y:469,w:36,h:40}, S51:{x:1106,y:499,w:36,h:41}, S52:{x:1086,y:532,w:39,h:38},
+  S53:{x:1062,y:560,w:39,h:35}, S54:{x:1035,y:580,w:39,h:35}, S55:{x:1027,y:580,w:39,h:36},
+  S56:{x:989,y:590,w:39,h:38}, S57:{x:956,y:601,w:35,h:38}, S58:{x:923,y:611,w:36,h:39}, S59:{x:887,y:615,w:38,h:35}
+}
 Object.assign(stallRects,FALLBACK_RECTS);
 
 // Slide 3 — Flea Market stalls. Only FM1-FM36 are shown on the supplied slide.
