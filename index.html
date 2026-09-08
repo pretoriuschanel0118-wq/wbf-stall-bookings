@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wees Bees Fees 2026 | Vendor Stall Booking</title>
@@ -132,7 +130,7 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
 <header>
   <div class="header-inner">
     <div class="brand"><span class="bee" aria-label="Agriculture">🚜</span><div><h1>Wees Bees Fees 2026</h1><small>Vendor Stall Booking</small></div></div>
-    <div class="nav" id="nav"></div>
+    <div class="nav" id="nav"><button class="btn btn-secondary" onclick="showAuth('vendor')">Vendor Login</button><button class="btn btn-primary" onclick="showAuth('register')">Register</button><button class="btn btn-ghost" onclick="showAuth('admin')">Admin</button></div>
   </div>
 </header>
 
@@ -160,7 +158,7 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
     </div>
   </section>
 
-  <section id="authView" class="auth card">
+  <section id="authView" class="auth card hidden">
     <div class="auth-toggle">
       <button class="btn btn-primary" id="vendorAuthTab" onclick="showAuth('vendor')">Vendor Login</button>
       <button class="btn btn-secondary" id="registerAuthTab" onclick="showAuth('register')">Register</button>
@@ -169,8 +167,8 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
 
     <form id="loginForm" class="form">
       <h2>Vendor login</h2>
-      <div class="field"><label>Email address</label><input id="loginEmail" type="email" required></div>
-      <div class="field"><label>Password</label><input id="loginPassword" type="password" required></div>
+      <div class="field"><label>Email address</label><input id="loginEmail" type="email" required=""></div>
+      <div class="field"><label>Password</label><input id="loginPassword" type="password" required=""></div>
       <button class="btn btn-primary" type="submit">Log in</button>
       <p class="muted">New vendor? Choose Register above.</p>
     </form>
@@ -178,15 +176,15 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
     <form id="registerForm" class="form hidden">
       <h2>Vendor registration</h2>
       <div class="form-grid">
-        <div class="field"><label>Business / stall name *</label><input id="regBusiness" required></div>
-        <div class="field"><label>Contact person's name *</label><input id="regContact" required></div>
-        <div class="field"><label>Cellphone number *</label><input id="regPhone" required></div>
-        <div class="field"><label>Email address *</label><input id="regEmail" type="email" required></div>
+        <div class="field"><label>Business / stall name *</label><input id="regBusiness" required=""></div>
+        <div class="field"><label>Contact person's name *</label><input id="regContact" required=""></div>
+        <div class="field"><label>Cellphone number *</label><input id="regPhone" required=""></div>
+        <div class="field"><label>Email address *</label><input id="regEmail" type="email" required=""></div>
       </div>
-      <div class="field"><label>What do you sell? *</label><input id="regSell" required></div>
+      <div class="field"><label>What do you sell? *</label><input id="regSell" required=""></div>
       <div class="form-grid">
-        <div class="field"><label>Create password *</label><input id="regPassword" type="password" minlength="6" required></div>
-        <div class="field"><label>Confirm password *</label><input id="regPassword2" type="password" minlength="6" required></div>
+        <div class="field"><label>Create password *</label><input id="regPassword" type="password" minlength="6" required=""></div>
+        <div class="field"><label>Confirm password *</label><input id="regPassword2" type="password" minlength="6" required=""></div>
       </div>
       <button class="btn btn-primary" type="submit">Create vendor account</button>
       <div class="notice">Your account is stored locally in this prototype. For a live multi-device deployment, connect the data layer to a secure server/database.</div>
@@ -194,8 +192,8 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
 
     <form id="adminForm" class="form hidden">
       <h2>Administrator login</h2>
-      <div class="field"><label>Email</label><input id="adminEmail" type="email" required></div>
-      <div class="field"><label>Password</label><input id="adminPassword" type="password" required></div>
+      <div class="field"><label>Email</label><input id="adminEmail" type="email" required=""></div>
+      <div class="field"><label>Password</label><input id="adminPassword" type="password" required=""></div>
       <button class="btn btn-primary" type="submit">Admin sign in</button>
     </form>
   </section>
@@ -222,7 +220,7 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
         <div class="legend-item"><i class="dot selected"></i>Your selection</div>
         
       </div>
-      <div class="map-section-title">Slide 2 — C Hockey & A Rugby Main Layout</div>
+      <div class="map-section-title">Slide 2 — C Hockey &amp; A Rugby Main Layout</div>
       <div class="muted" style="margin-bottom:8px">Only the S-stalls on this slide are interactive. Flea Market stalls are shown on Slide 3.</div>
       <div class="map-wrap"><div class="map-stage" id="vendorMapStage"></div></div>
 
@@ -543,7 +541,7 @@ document.getElementById("adminForm").addEventListener("submit",loginAdmin);
 
 function renderVendor(){const v=currentVendor();if(!v){logout();return}vendorWelcome.textContent=`Welcome, ${v.business}`;vendorMeta.textContent=`${v.contact} • ${v.email} • ${v.phone}`;renderMap("vendorMapStage");renderFMMap("vendorFMMapStage");renderMyBookings()}
 function createMapImage(src,w,h){const img=document.createElement("img");img.src=src;img.alt="Wees Bees Fees 2026 event layout";img.style.width=w+"px";img.style.height=h+"px";img.style.display="block";img.style.userSelect="none";return img}
-function addStallOverlay(target,stall,r,admin=false){const el=document.createElement("button");el.type="button";el.className="stall"+(stall.type==="FM"?" fm-stall":"");const booked=isBooked(stall.id),blocked=isBlocked(stall.id);if(booked)el.classList.add("booked");else if(blocked)el.classList.add("blocked");if(selectedStall===stall.id&&!booked&&!blocked)el.classList.add("selected");el.style.left=r.x+"px";el.style.top=r.y+"px";el.style.width=r.w+"px";el.style.height=r.h+"px";if(r.clip)el.style.clipPath=r.clip;el.title=stall.label+(booked?" — BOOKED — Selling: "+(getBooking(stall.id)?.sell||"Not specified"):blocked?" — BLOCKED BY ADMIN":" — AVAILABLE");el.innerHTML="";if(admin)el.onclick=()=>adminStallAction(stall.id);else if(!booked&&!blocked)el.onclick=()=>selectStall(stall.id);else if(booked)el.onclick=()=>showBookedStallInfo(stall.id);else el.onclick=()=>alert("This stall is currently blocked by the event administrator.");target.appendChild(el)}
+function addStallOverlay(target,stall,r,admin=false){const el=document.createElement("button");el.type="button";el.className="stall"+(stall.type==="FM"?" fm-stall":"");const booked=isBooked(stall.id),blocked=isBlocked(stall.id);if(booked)el.classList.add("booked");else if(blocked)el.classList.add("blocked");if(selectedStall===stall.id&&!booked&&!blocked)el.classList.add("selected");el.style.left=r.x+"px";el.style.top=r.y+"px";el.style.width=r.w+"px";el.style.height=r.h+"px";el.title=stall.label+(booked?" — BOOKED — Selling: "+(getBooking(stall.id)?.sell||"Not specified"):blocked?" — BLOCKED BY ADMIN":" — AVAILABLE");el.innerHTML="";if(admin)el.onclick=()=>adminStallAction(stall.id);else if(!booked&&!blocked)el.onclick=()=>selectStall(stall.id);else if(booked)el.onclick=()=>showBookedStallInfo(stall.id);else el.onclick=()=>alert("This stall is currently blocked by the event administrator.");target.appendChild(el)}
 function renderMap(targetId,admin=false){const target=document.getElementById(targetId);if(!target)return;target.innerHTML="";target.style.position="relative";target.style.width=MAP_W*mapZoom+"px";target.style.height=MAP_H*mapZoom+"px";const img=createMapImage(MAP_DATA,MAP_W,MAP_H);img.style.transform=`scale(${mapZoom})`;img.style.transformOrigin="top left";target.appendChild(img);const layer=document.createElement("div");layer.style.position="absolute";layer.style.inset="0";layer.style.transform=`scale(${mapZoom})`;layer.style.transformOrigin="top left";target.appendChild(layer);S.forEach(stall=>{const r=stallRects[stall.id];if(r)addStallOverlay(layer,stall,r,admin)});}
 function renderFMMap(targetId,admin=false){const target=document.getElementById(targetId);if(!target)return;target.innerHTML="";target.style.position="relative";target.style.width=FM_MAP_W*mapZoom+"px";target.style.height=FM_MAP_H*mapZoom+"px";const img=createMapImage(FM_MAP_DATA,FM_MAP_W,FM_MAP_H);img.style.transform=`scale(${mapZoom})`;img.style.transformOrigin="top left";target.appendChild(img);const layer=document.createElement("div");layer.style.position="absolute";layer.style.inset="0";layer.style.transform=`scale(${mapZoom})`;layer.style.transformOrigin="top left";target.appendChild(layer);FM.forEach(stall=>{const r=fmRects[stall.id];if(r)addStallOverlay(layer,stall,r,admin)});}
 function zoomMap(f){mapZoom=Math.max(.55,Math.min(1.5,mapZoom*f));if(session?.role==="admin"){renderMap("adminMapStage",true);renderFMMap("adminFMMapStage",true)}else{renderMap("vendorMapStage");renderFMMap("vendorFMMapStage")}}
@@ -622,5 +620,6 @@ function exportCSV(){const rows=[["Stall","Stall type","Size","Business / Stall 
 setInterval(async()=>{if(session){try{await loadData();if(session.role==="vendor"){renderVendor()}else{renderAdmin()}}catch(e){console.error(e)}}},5000);
 </script>
 </div>
-</body>
-</html>
+
+
+</body></html>
