@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wees Bees Fees 2026 | Vendor Stall Booking</title>
@@ -52,7 +50,7 @@
   .stall.selected{background:rgba(30,120,255,.16);border-color:#0877ff;box-shadow:inset 0 0 0 3px rgba(8,119,255,.9),0 0 0 2px rgba(8,119,255,.55);color:#073b6d;z-index:6}
   
   .stall-label{font-size:clamp(8px,1vw,12px);font-weight:900;text-shadow:0 1px rgba(255,255,255,.45);white-space:nowrap}
-  .stall.fm-stall .stall-label{font-size:7px;letter-spacing:-.2px}
+  .stall.fm-stall .stall-label{font-size:6px;letter-spacing:-.2px}
   .zoom-note{font-size:12px;color:#5a7064}
   .dashboard{margin-top:20px}
   .tabs{display:flex;gap:7px;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:16px}
@@ -79,7 +77,7 @@
   .notice{padding:12px 14px;border-radius:10px;background:#eef8f0;border:1px solid #c9e6d0;color:#245c38;font-size:13px}
   .warning{background:#fff7db;border-color:#eedc86;color:#695500}
   .danger-note{background:#fff0ef;border-color:#efc1bd;color:#812c27}
-  .modal-backdrop{position:fixed;inset:0;background:rgba(7,27,18,.58);display:flex;align-items:center;justify-content:center;padding:18px;z-index:9999}
+  .modal-backdrop{position:fixed;inset:0;background:rgba(7,27,18,.58);display:flex;align-items:center;justify-content:center;padding:18px;z-index:100}
   .modal{background:#fff;border-radius:18px;max-width:620px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 25px 70px rgba(0,0,0,.3);padding:22px}
   .modal h3{margin:0 0 5px;color:var(--green-900)}
   .summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:16px 0}
@@ -151,8 +149,8 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
 
     <form id="loginForm" class="form">
       <h2>Vendor login</h2>
-      <div class="field"><label>Email address</label><input id="loginEmail" type="email" required></div>
-      <div class="field"><label>Password</label><input id="loginPassword" type="password" required></div>
+      <div class="field"><label>Email address</label><input id="loginEmail" type="email" required=""></div>
+      <div class="field"><label>Password</label><input id="loginPassword" type="password" required=""></div>
       <button class="btn btn-primary" type="submit">Log in</button>
       <p class="muted">New vendor? Choose Register above.</p>
     </form>
@@ -160,24 +158,24 @@ window.WBF_LIVE_DATABASE_CONFIGURED = true;
     <form id="registerForm" class="form hidden">
       <h2>Vendor registration</h2>
       <div class="form-grid">
-        <div class="field"><label>Business / stall name *</label><input id="regBusiness" required></div>
-        <div class="field"><label>Contact person's name *</label><input id="regContact" required></div>
-        <div class="field"><label>Cellphone number *</label><input id="regPhone" required></div>
-        <div class="field"><label>Email address *</label><input id="regEmail" type="email" required></div>
+        <div class="field"><label>Business / stall name *</label><input id="regBusiness" required=""></div>
+        <div class="field"><label>Contact person's name *</label><input id="regContact" required=""></div>
+        <div class="field"><label>Cellphone number *</label><input id="regPhone" required=""></div>
+        <div class="field"><label>Email address *</label><input id="regEmail" type="email" required=""></div>
       </div>
-      <div class="field"><label>What do you sell? *</label><input id="regSell" required></div>
+      <div class="field"><label>What do you sell? *</label><input id="regSell" required=""></div>
       <div class="form-grid">
-        <div class="field"><label>Create password *</label><input id="regPassword" type="password" minlength="6" required></div>
-        <div class="field"><label>Confirm password *</label><input id="regPassword2" type="password" minlength="6" required></div>
+        <div class="field"><label>Create password *</label><input id="regPassword" type="password" minlength="6" required=""></div>
+        <div class="field"><label>Confirm password *</label><input id="regPassword2" type="password" minlength="6" required=""></div>
       </div>
       <button class="btn btn-primary" type="submit">Create vendor account</button>
-      <div class="notice">Your account is stored securely in the live booking database. You can log in from another device using the same account.</div>
+      <div class="notice">Your account is stored locally in this prototype. For a live multi-device deployment, connect the data layer to a secure server/database.</div>
     </form>
 
     <form id="adminForm" class="form hidden">
       <h2>Administrator login</h2>
-      <div class="field"><label>Email</label><input id="adminEmail" type="email" required></div>
-      <div class="field"><label>Password</label><input id="adminPassword" type="password" required></div>
+      <div class="field"><label>Email</label><input id="adminEmail" type="email" required=""></div>
+      <div class="field"><label>Password</label><input id="adminPassword" type="password" required=""></div>
       <button class="btn btn-primary" type="submit">Admin sign in</button>
     </form>
   </section>
@@ -287,7 +285,7 @@ Object.assign(stallRects,leftRects);
 
 // Right curve S38-S57.
 const rightRects={
- S38:{x:988,y:82,w:40,h:38},S39:{x:1022,y:92,w:39,h:40},S40:{x:1053,y:111,w:39,h:41},S41:{x:1080,y:137,w:39,h:42},S42:{x:1101,y:166,w:39,h:44},S43:{x:1119,y:196,w:39,h:46},S44:{x:1132,y:230,w:38,h:47},S45:{x:1143,y:264,w:38,h:48},S46:{x:1150,y:301,w:37,h:49},S47:{x:1154,y:340,w:36,h:49},S48:{x:1153,y:380,w:35,h:50},S49:{x:1149,y:422,w:35,h:50},S50:{x:1140,y:464,w:36,h:49},S51:{x:1128,y:507,w:36,h:47},S52:{x:1111,y:548,w:36,h:44},S53:{x:1091,y:578,w:36,h:43},S54:{x:1068,y:601,w:36,h:40},S55:{x:1042,y:614,w:37,h:35},S56:{x:1009,y:615,w:37,h:34},S57:{x:976,y:615,w:37,h:34},S58:{x:943,y:615,w:37,h:34},S59:{x:910,y:615,w:37,h:34}
+ S38:{x:986,y:82,w:43,h:39},S39:{x:1017,y:92,w:44,h:41},S40:{x:1048,y:111,w:45,h:43},S41:{x:1076,y:136,w:44,h:44},S42:{x:1099,y:163,w:44,h:46},S43:{x:1118,y:193,w:43,h:48},S44:{x:1131,y:226,w:43,h:48},S45:{x:1142,y:262,w:43,h:49},S46:{x:1150,y:300,w:42,h:50},S47:{x:1153,y:342,w:43,h:51},S48:{x:1152,y:386,w:43,h:51},S49:{x:1148,y:430,w:43,h:52},S50:{x:1139,y:476,w:44,h:51},S51:{x:1124,y:522,w:46,h:50},S52:{x:1105,y:565,w:46,h:49},S53:{x:1120,y:538,w:43,h:50},S54:{x:1098,y:582,w:43,h:50},S55:{x:1070,y:622,w:43,h:37},S56:{x:1030,y:622,w:43,h:37},S57:{x:990,y:616,w:43,h:37},S58:{x:950,y:615,w:43,h:37},S59:{x:910,y:615,w:43,h:37}
 };
 Object.assign(stallRects,rightRects);
 
@@ -321,8 +319,17 @@ async function loadData(){
 }
 async function isAdminUser(user){
   if(!user)return false;
+  // Check the admins table first. The policy allows an authenticated user
+  // to read only their own admin row.
   const {data,error}=await sb.from("admins").select("user_id").eq("user_id",user.id).maybeSingle();
-  return !error&&!!data;
+  if(!error && !!data)return true;
+  // Fall back to the security-definer is_admin() RPC. This avoids a login
+  // failure if the table SELECT policy is temporarily out of sync.
+  try{
+    const rpc=await sb.rpc("is_admin");
+    if(!rpc.error && rpc.data===true)return true;
+  }catch(e){}
+  return false;
 }
 async function route(){
   try{await loadData();}catch(e){console.error(e);alert("Could not load the live booking database. Check your Supabase URL/key and database setup.");}
@@ -338,24 +345,23 @@ function updateNav(){
 }
 function showOnly(id){["landing","authView","vendorView","adminView"].forEach(x=>document.getElementById(x).classList.add("hidden"));if(id)document.getElementById(id).classList.remove("hidden")}
 function showAuth(type){showOnly("authView");document.getElementById("loginForm").classList.toggle("hidden",type!=="vendor");document.getElementById("registerForm").classList.toggle("hidden",type!=="register");document.getElementById("adminForm").classList.toggle("hidden",type!=="admin");[["vendorAuthTab","vendor"],["registerAuthTab","register"],["adminAuthTab","admin"]].forEach(([id,t])=>document.getElementById(id).className="btn "+(t===type?"btn-primary":"btn-secondary"));window.scrollTo({top:0,behavior:"smooth"})}
-async function setUserSession(user,forcedRole=null){
- if(!user){session=null;sessionStorage.removeItem("wbf_session");return;}
- const admin=forcedRole==="admin" ? true : await isAdminUser(user);
- session={role:admin?"admin":"vendor",userId:user.id,email:(user.email||"").toLowerCase()};
+async function setUserSession(user){
+ const admin=await isAdminUser(user);
+ session={role:admin?"admin":"vendor",userId:user.id};
  sessionStorage.setItem("wbf_session",JSON.stringify(session));
  await route();
 }
 async function logout(){await sb.auth.signOut();session=null;sessionStorage.removeItem("wbf_session");selectedStall=null;updateNav();showOnly(null);document.getElementById("landing").classList.remove("hidden")}
 
 // Auth state is the source of truth; do not store passwords in browser storage.
-sb.auth.onAuthStateChange((_event,authSession)=>{
-  // Do not overwrite an already-determined admin/vendor role here.
-  // Supabase fires this callback during sign-in; changing the role to
-  // "vendor" here was causing the admin dashboard to disappear.
-  if(!authSession?.user){
+sb.auth.onAuthStateChange(async (_event,authSession)=>{
+  if(authSession?.user){
+    // Never assume a signed-in account is a vendor. Check the admin table/RPC
+    // so the administrator is not accidentally routed to the vendor page.
+    await setUserSession(authSession.user);
+  }else{
     session=null;
     sessionStorage.removeItem("wbf_session");
-    updateNav();
   }
 });
 
@@ -378,18 +384,16 @@ async function loginVendor(e){
  const email=loginEmail.value.trim().toLowerCase(),password=loginPassword.value;
  const {data,error}=await sb.auth.signInWithPassword({email,password});
  if(error)return alert(error.message);
- await setUserSession(data.user,"vendor");
+ await setUserSession(data.user);
 }
 async function loginAdmin(e){
  e.preventDefault();
  const email=adminEmail.value.trim().toLowerCase(),password=adminPassword.value;
- if(email!==ADMIN_EMAIL)return alert("Please use the administrator email address.");
+ if(email!==ADMIN_EMAIL)return alert("Invalid administrator credentials.");
  const {data,error}=await sb.auth.signInWithPassword({email,password});
- if(error)return alert("Administrator login failed: "+error.message);
- if(!data?.user)return alert("Administrator login failed: no user was returned by Supabase.");
- // The database SQL also creates the admin record. The forced role prevents the
- // browser auth callback from accidentally switching the administrator to Vendor.
- await setUserSession(data.user,"admin");
+ if(error)return alert(error.message);
+ if(!(await isAdminUser(data.user))){await sb.auth.signOut();return alert("This account is not configured as an administrator.");}
+ await setUserSession(data.user);
 }
 
 document.getElementById("registerForm").addEventListener("submit",registerVendor);
@@ -398,7 +402,7 @@ document.getElementById("adminForm").addEventListener("submit",loginAdmin);
 
 function renderVendor(){const v=currentVendor();if(!v){logout();return}vendorWelcome.textContent=`Welcome, ${v.business}`;vendorMeta.textContent=`${v.contact} • ${v.email} • ${v.phone}`;renderMaps(false);renderMyBookings()}
 function makeMapImage(target,src,height){target.innerHTML="";target.style.position="relative";target.style.width=MAP_W*mapZoom+"px";target.style.height=height*mapZoom+"px";const img=document.createElement("img");img.src=src;img.alt="Wees Bees Fees 2026 event layout";img.style.width=MAP_W+"px";img.style.height="auto";img.style.transform=`scale(${mapZoom})`;img.style.transformOrigin="top left";target.appendChild(img);return target}
-function addStallOverlay(target,stall,rect,admin){const el=document.createElement("button");el.type="button";el.className="stall"+(stall.type==="FM"?" fm-stall":"");el.style.pointerEvents="auto";const booked=isBooked(stall.id),blocked=isBlocked(stall.id);if(booked)el.classList.add("booked");else if(blocked)el.classList.add("blocked");if(selectedStall===stall.id&&!booked&&!blocked)el.classList.add("selected");el.style.left=(rect.x/MAP_W*100)+"%";el.style.top=(rect.y/(stall.type==="FM"?MAP_FM_H:MAP_S_H)*100)+"%";el.style.width=(rect.w/MAP_W*100)+"%";el.style.height=(rect.h/(stall.type==="FM"?MAP_FM_H:MAP_S_H)*100)+"%";el.title=stall.label+(booked?" — BOOKED — Selling: "+(getBooking(stall.id)?.sell||"Not specified"):blocked?" — BLOCKED BY ADMIN":" — AVAILABLE");el.innerHTML=`<span class="stall-label">${stall.label}</span>`;if(admin)el.onclick=()=>adminStallAction(stall.id);else if(!booked&&!blocked)el.onclick=()=>selectStall(stall.id);else if(booked)el.onclick=()=>showBookedStallInfo(stall.id);else el.onclick=()=>alert("This stall is currently blocked by the event administrator.");target.appendChild(el)}
+function addStallOverlay(target,stall,rect,admin){const el=document.createElement("button");el.type="button";el.className="stall"+(stall.type==="FM"?" fm-stall":"");const booked=isBooked(stall.id),blocked=isBlocked(stall.id);if(booked)el.classList.add("booked");else if(blocked)el.classList.add("blocked");if(selectedStall===stall.id&&!booked&&!blocked)el.classList.add("selected");el.style.left=(rect.x/MAP_W*100)+"%";el.style.top=(rect.y/(stall.type==="FM"?MAP_FM_H:MAP_S_H)*100)+"%";el.style.width=(rect.w/MAP_W*100)+"%";el.style.height=(rect.h/(stall.type==="FM"?MAP_FM_H:MAP_S_H)*100)+"%";el.title=stall.label+(booked?" — BOOKED — Selling: "+(getBooking(stall.id)?.sell||"Not specified"):blocked?" — BLOCKED BY ADMIN":" — AVAILABLE");el.innerHTML=`<span class="stall-label">${stall.label}</span>`;if(admin)el.onclick=()=>adminStallAction(stall.id);else if(!booked&&!blocked)el.onclick=()=>selectStall(stall.id);else if(booked)el.onclick=()=>showBookedStallInfo(stall.id);else el.onclick=()=>alert("This stall is currently blocked by the event administrator.");target.appendChild(el)}
 function renderMaps(admin=false){
   const sTarget=document.getElementById(admin?"adminSMapStage":"vendorSMapStage");
   const fmTarget=document.getElementById(admin?"adminFMMapStage":"vendorFMMapStage");
@@ -406,88 +410,53 @@ function renderMaps(admin=false){
   if(sTarget){makeMapImage(sTarget,MAP_S_DATA,MAP_S_H);S.forEach(stall=>{if(stallRects[stall.id])addStallOverlay(sTarget,stall,stallRects[stall.id],admin)})}
   if(fmTarget){makeMapImage(fmTarget,MAP_FM_DATA,MAP_FM_H);FM.forEach(stall=>{if(fmRects[stall.id])addStallOverlay(fmTarget,stall,fmRects[stall.id],admin)})}
   if(keyTarget){makeMapImage(keyTarget,MAP_KEY_DATA,MAP_KEY_H)}
-  // Extra click handling: if a user clicks directly on the map image, find the
-  // closest stall hit-area. This keeps the booking dialog accessible even if
-  // browser scaling makes a transparent overlay slightly difficult to hit.
-  [sTarget,fmTarget].forEach(target=>{
-    if(!target || target.dataset.clickReady==="1")return;
-    target.dataset.clickReady="1";
-    target.addEventListener("click",function(ev){
-      if(admin)return;
-      if(ev.target.closest("button.stall"))return;
-      const rect=target.getBoundingClientRect();
-      const scaleX=MAP_W/rect.width, scaleY=(target===fmTarget?MAP_FM_H:MAP_S_H)/rect.height;
-      const x=(ev.clientX-rect.left)*scaleX, y=(ev.clientY-rect.top)*scaleY;
-      const list=target===fmTarget?FM:S;
-      const lookup=target===fmTarget?fmRects:stallRects;
-      let best=null,dist=Infinity;
-      list.forEach(st=>{const r=lookup[st.id];if(!r)return;const cx=r.x+r.w/2,cy=r.y+r.h/2;const d=Math.hypot(x-cx,y-cy);if(d<dist){dist=d;best=st.id}});
-      if(best && dist<55)selectStall(best);
-    });
-  });
 }
 function zoomMap(f){mapZoom=Math.max(.55,Math.min(1.5,mapZoom*f));renderMaps(session?.role==="admin")}
 function resetZoom(){mapZoom=1;renderMaps(session?.role==="admin")}
 function selectStall(stallId){
+  if(isBooked(stallId)||isBlocked(stallId))return;
   const stall=allStalls().find(s=>s.id===stallId);
   const v=currentVendor();
-  if(!stall)return alert("Stall not found.");
-  if(!v)return alert("Please log in as a vendor before selecting a stall.");
-  if(isBooked(stallId))return showBookedStallInfo(stallId);
-  if(isBlocked(stallId))return alert("This stall is currently blocked by the administrator.");
+  if(!stall||!v){alert("Your vendor details could not be loaded. Please log out and log in again.");return;}
   selectedStall=stallId;
   renderMaps(false);
   openConfirmModal(v,stall);
 }
 function showBookedStallInfo(stallId){const booking=getBooking(stallId);if(!booking)return;document.getElementById("modalRoot").innerHTML=`<div class="modal-backdrop"><div class="modal"><h3>Stall ${esc(stallId)} — Already Booked</h3><p class="muted">This stall is unavailable for booking, but you can see what the vendor is selling.</p><div class="summary"><div><small>Vendor / business</small><strong>${esc(booking.business)}</strong></div><div><small>Contact person</small><strong>${esc(booking.contact)}</strong></div><div class="selling-info"><small>WHAT THIS VENDOR IS SELLING</small><strong>${esc(booking.sell)}</strong></div><div><small>Stall type</small><strong>${esc(booking.size)}</strong></div></div><div class="notice">🔴 Booked stalls cannot be selected. Tap another green stall to make your own booking.</div><div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal()">Close</button></div></div></div>`}
-function openConfirmModal(v,stall){const sizeOptions=stall.type==="S"?`<div class="field"><label>Stall type *</label><select id="confirmSize"><option value="5x3M">5x3M</option><option value="5x10M">5x10M</option></select></div>`:`<div class="field"><label>Stall type</label><input value="3x3M" disabled></div>`;document.getElementById("modalRoot").innerHTML=`<div class="modal-backdrop"><div class="modal"><h3>Confirm stall booking</h3><p class="muted">Please check all information before saving. Stall <b>${esc(stall.label)}</b> will become unavailable after confirmation.</p><div class="summary"><div><small>Vendor / business</small><strong>${esc(v.business)}</strong></div><div><small>Contact person</small><strong>${esc(v.contact)}</strong></div><div><small>Phone number</small><strong>${esc(v.phone)}</strong></div><div><small>What they sell</small><strong>${esc(v.sell)}</strong></div><div><small>Selected stall</small><strong>${esc(stall.label)}</strong></div></div>${sizeOptions}<div class="notice">The live database will check the stall again at the moment of confirmation. This prevents two vendors from booking the same stall.</div><div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="confirmBooking('${stall.id}')">Confirm & Book Stall</button></div></div></div>`}
+function openConfirmModal(v,stall){
+  if(!v||!stall)return;
+  const isS=stall.type==="S";
+  const sizeSection=isS
+    ? `<div class="field"><label>Choose your stall size *</label><select id="confirmSize"><option value="5x3M">5x3M</option><option value="5x10M">5x10M</option></select><span class="muted">Choose the size you require for this S-stall.</span></div>`
+    : `<div class="field"><label>Flea Market stall size</label><input value="3x3M" disabled><span class="muted">Flea Market stalls are fixed at 3x3M. Size cannot be changed.</span></div>`;
+  document.getElementById("modalRoot").innerHTML=`<div class="modal-backdrop"><div class="modal">
+    <h3>Confirm stall booking</h3>
+    <p class="muted">Please check your details before booking <b>${esc(stall.label)}</b>.</p>
+    <div class="summary">
+      <div><small>Vendor / business</small><strong>${esc(v.business)}</strong></div>
+      <div><small>Contact person</small><strong>${esc(v.contact)}</strong></div>
+      <div><small>Phone number</small><strong>${esc(v.phone)}</strong></div>
+      <div><small>Email</small><strong>${esc(v.email)}</strong></div>
+      <div class="selling-info"><small>WHAT THEY ARE SELLING</small><strong>${esc(v.sell)}</strong></div>
+      <div><small>Selected stall</small><strong>${esc(stall.label)}</strong></div>
+    </div>
+    ${sizeSection}
+    <div class="notice">Your booking is only saved when you press <b>Confirm &amp; Book Stall</b>. The live database will check the stall again before saving.</div>
+    <div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="confirmBooking('${stall.id}')">Confirm &amp; Book Stall</button></div>
+  </div></div>`;
+}
 function closeModal(){document.getElementById("modalRoot").innerHTML="";selectedStall=null;if(session?.role==="vendor")renderMaps(false)}
 async function confirmBooking(stallId){
- const button=document.querySelector('#modalRoot .btn-primary');
- if(button){button.disabled=true;button.textContent="Saving booking...";}
- try{
-   await loadData();
-   if(isBooked(stallId)||isBlocked(stallId)){
-     closeModal();
-     alert("Sorry, that stall is no longer available. Please choose another stall.");
-     await route();
-     return;
-   }
-   const v=currentVendor();
-   const stall=allStalls().find(s=>s.id===stallId);
-   if(!v){
-     closeModal();
-     alert("Your vendor details could not be loaded. Please log in again.");
-     await route();
-     return;
-   }
-   if(!stall){
-     closeModal();
-     alert("That stall could not be found.");
-     return;
-   }
-   const size=stall.type==="S"
-     ? (document.getElementById("confirmSize")?.value||"5x3M")
-     : "3x3M";
-   const {error}=await sb.rpc("book_stall",{p_stall_id:stallId,p_size:size});
-   if(error){
-     closeModal();
-     const msg=String(error.message||"");
-     alert(msg.toLowerCase().includes("book")||msg.toLowerCase().includes("available")
-       ? "Sorry, that stall is no longer available. Please choose another stall."
-       : msg);
-     await route();
-     return;
-   }
-   closeModal();
-   await route();
-   alert(`Booking confirmed: ${stallId} (${size}).`);
- }catch(err){
-   console.error(err);
-   closeModal();
-   alert("The booking could not be saved. Please try again.");
-   await route();
+ if(isBooked(stallId)){closeModal();alert("Sorry, that stall is no longer available.");await route();return}
+ const v=currentVendor(),stall=allStalls().find(s=>s.id===stallId);if(!v||!stall)return;
+ let size="3x3M";
+ if(stall.type==="S"){
+   size=document.getElementById("confirmSize")?.value||"";
+   if(!["5x3M","5x10M"].includes(size)){alert("Please choose either 5x3M or 5x10M.");return;}
  }
+ const {data,error}=await sb.rpc("book_stall",{p_stall_id:stallId,p_size:size});
+ if(error){closeModal();alert(error.message.includes("already booked")?"Sorry, that stall was just booked by another vendor. Please choose another stall.":error.message);await route();return}
+ closeModal();await route();alert(`Booking confirmed: ${stallId} (${size}).`)
 }
 function renderMyBookings(){const v=currentVendor(),mine=cache.bookings.filter(b=>b.vendorId===v.id),el=document.getElementById("myBookings");if(!mine.length){el.innerHTML=`<div class="empty">You have no bookings yet. Select a green stall on the map.</div>`;return}el.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Stall</th><th>Type</th><th>Business</th><th>What they sell</th><th>Booked</th></tr></thead><tbody>${mine.map(b=>`<tr><td><b>${esc(b.stallId)}</b></td><td>${esc(b.size)}</td><td>${esc(b.business)}</td><td>${esc(b.sell)}</td><td>${new Date(b.bookedAt).toLocaleString()}</td></tr>`).join("")}</tbody></table></div>`}
 
@@ -502,11 +471,12 @@ async function toggleBlock(stallId){const blocked=isBlocked(stallId);if(!blocked
 function exportCSV(){const rows=[["Stall","Stall type","Size","Business / Stall Name","Contact Person","Cellphone","Email","What They Sell","Booked At"]];cache.bookings.forEach(b=>rows.push([b.stallId,b.stallId.startsWith("FM")?"Flea Market":"Vendor",b.size,b.business,b.contact,b.phone,b.email,b.sell,b.bookedAt]));const csv=rows.map(r=>r.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="wees-bees-fees-vendor-bookings.csv";a.click();URL.revokeObjectURL(url)}
 
 // Start: restore Supabase auth session.
-(async()=>{const {data}=await sb.auth.getSession();if(data.session){await setUserSession(data.session.user)}else route()})();
+(async()=>{const {data}=await sb.auth.getSession();if(data.session){session={role:"vendor",userId:data.session.user.id};await setUserSession(data.session.user)}else route()})();
 
 // Live refresh: every open page re-reads the central database after changes.
 setInterval(async()=>{if(session){try{await loadData();if(session.role==="vendor"){renderVendor()}else{renderAdmin()}}catch(e){console.error(e)}}},5000);
 </script>
 </div>
-</body>
-</html>
+
+
+</body></html>
