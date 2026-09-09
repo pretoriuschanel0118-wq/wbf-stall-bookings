@@ -52,7 +52,7 @@
   .stall.selected{background:rgba(30,120,255,.16);border-color:#0877ff;box-shadow:inset 0 0 0 3px rgba(8,119,255,.9),0 0 0 2px rgba(8,119,255,.55);color:#073b6d;z-index:6}
   
   .stall-label{font-size:clamp(8px,1vw,12px);font-weight:900;text-shadow:0 1px rgba(255,255,255,.45);white-space:nowrap}
-  .stall.fm-stall{border-width:1px}.stall.fm-stall .stall-label{font-size:5px;letter-spacing:-.25px}
+  .stall.fm-stall{border-width:2px}.stall.fm-stall .stall-label{font-size:5px;letter-spacing:-.25px}
   .zoom-note{font-size:12px;color:#5a7064}
   .dashboard{margin-top:20px}
   .tabs{display:flex;gap:7px;flex-wrap:wrap;border-bottom:1px solid var(--border);margin-bottom:16px}
@@ -316,42 +316,41 @@ const FALLBACK_RECTS = {};
 
 // Slide 2 — S-stalls. These are the only interactive stalls on Slide 2.
 Object.assign(FALLBACK_RECTS, {
-  // Bottom-left curve: S1-S5
-  S1:{x:523,y:615,w:31,h:31}, S2:{x:490,y:610,w:31,h:35}, S3:{x:457,y:603,w:35,h:38},
-  S4:{x:426,y:593,w:36,h:40}, S5:{x:395,y:575,w:40,h:43},
-  // Left curve: S6-S22
-  S6:{x:383,y:582,w:40,h:40}, S7:{x:351,y:551,w:41,h:42}, S8:{x:325,y:519,w:39,h:41},
-  S9:{x:305,y:481,w:38,h:42}, S10:{x:294,y:445,w:36,h:41}, S11:{x:286,y:409,w:32,h:40},
-  S12:{x:281,y:374,w:31,h:40}, S13:{x:280,y:336,w:32,h:40}, S14:{x:283,y:299,w:32,h:40},
-  S15:{x:287,y:261,w:34,h:41}, S16:{x:294,y:228,w:37,h:40}, S17:{x:302,y:197,w:38,h:40},
-  S18:{x:317,y:165,w:40,h:39}, S19:{x:338,y:133,w:42,h:40}, S20:{x:369,y:108,w:41,h:40},
-  S21:{x:399,y:91,w:40,h:39}, S22:{x:429,y:79,w:39,h:39},
-  // Top: S23-S30
-  S23:{x:466,y:72,w:37,h:40}, S24:{x:500,y:72,w:33,h:38}, S25:{x:534,y:72,w:28,h:33},
-  S26:{x:564,y:72,w:28,h:33}, S27:{x:594,y:72,w:28,h:34}, S28:{x:624,y:72,w:28,h:33},
-  S29:{x:654,y:72,w:28,h:33}, S30:{x:684,y:72,w:28,h:33},
-  // Top-right and right curve: S31-S45
-  S31:{x:776,y:72,w:28,h:33}, S32:{x:806,y:72,w:28,h:33}, S33:{x:836,y:72,w:28,h:33},
-  S34:{x:866,y:72,w:28,h:34}, S35:{x:896,y:72,w:28,h:33}, S36:{x:926,y:73,w:30,h:33}, S37:{x:956,y:75,w:34,h:37},
-  S38:{x:990,y:91,w:34,h:32}, S39:{x:1020,y:106,w:35,h:31}, S40:{x:1048,y:132,w:35,h:31},
-  S41:{x:1077,y:159,w:36,h:33}, S42:{x:1105,y:190,w:35,h:34}, S43:{x:1128,y:220,w:34,h:39},
-  S44:{x:1144,y:259,w:32,h:40}, S45:{x:1154,y:300,w:30,h:40},
-  S46:{x:1160,y:341,w:30,h:39}, S47:{x:1161,y:381,w:30,h:39}, S48:{x:1158,y:421,w:30,h:39},
-  S49:{x:1148,y:439,w:31,h:40}, S50:{x:1135,y:480,w:31,h:40}, S51:{x:1120,y:519,w:31,h:39},
-  S52:{x:1102,y:525,w:28,h:28}, S53:{x:1082,y:552,w:28,h:28},
-  S54:{x:1062,y:576,w:32,h:34}, S55:{x:1038,y:596,w:32,h:32}, S56:{x:1013,y:607,w:31,h:30},
-  S57:{x:982,y:617,w:31,h:29}, S58:{x:947,y:618,w:31,h:28}, S59:{x:916,y:617,w:30,h:29}
+  // Bottom-left curve — aligned to the new C HOCKEY & A RUGBY map
+  S1:{x:525,y:616,w:29,h:31}, S2:{x:491,y:609,w:32,h:37}, S3:{x:458,y:603,w:33,h:39},
+  S4:{x:427,y:593,w:36,h:40}, S5:{x:398,y:577,w:37,h:41}, S6:{x:371,y:556,w:38,h:43},
+  S7:{x:347,y:532,w:38,h:43}, S8:{x:326,y:505,w:37,h:43}, S9:{x:308,y:475,w:37,h:42},
+  S10:{x:295,y:443,w:35,h:41}, S11:{x:287,y:409,w:33,h:39}, S12:{x:281,y:374,w:32,h:38},
+  S13:{x:281,y:338,w:32,h:38}, S14:{x:282,y:300,w:32,h:37}, S15:{x:288,y:262,w:34,h:41},
+  S16:{x:299,y:228,w:35,h:41}, S17:{x:314,y:195,w:35,h:42}, S18:{x:331,y:165,w:37,h:43},
+  S19:{x:354,y:139,w:37,h:43}, S20:{x:379,y:117,w:37,h:42}, S21:{x:406,y:99,w:37,h:40},
+  S22:{x:436,y:85,w:35,h:38},
+  // Top-left to entry
+  S23:{x:468,y:77,w:33,h:36}, S24:{x:501,y:73,w:31,h:33}, S25:{x:535,y:73,w:27,h:32},
+  S26:{x:565,y:73,w:27,h:32}, S27:{x:595,y:73,w:27,h:32}, S28:{x:625,y:73,w:27,h:32},
+  S29:{x:655,y:73,w:27,h:32}, S30:{x:685,y:73,w:27,h:32},
+  // Entry to right curve
+  S31:{x:776,y:73,w:27,h:32}, S32:{x:806,y:73,w:27,h:32}, S33:{x:836,y:73,w:27,h:32},
+  S34:{x:866,y:73,w:27,h:32}, S35:{x:896,y:73,w:30,h:32}, S36:{x:926,y:72,w:30,h:34},
+  S37:{x:956,y:75,w:34,h:36}, S38:{x:987,y:83,w:35,h:38}, S39:{x:1016,y:96,w:36,h:39},
+  S40:{x:1043,y:112,w:37,h:42}, S41:{x:1069,y:133,w:38,h:43}, S42:{x:1091,y:159,w:37,h:43},
+  S43:{x:1112,y:188,w:36,h:43}, S44:{x:1128,y:220,w:35,h:42}, S45:{x:1140,y:255,w:34,h:40},
+  S46:{x:1149,y:291,w:32,h:39}, S47:{x:1154,y:329,w:29,h:35}, S48:{x:1153,y:367,w:30,h:36},
+  S49:{x:1148,y:401,w:32,h:39}, S50:{x:1137,y:435,w:35,h:42}, S51:{x:1123,y:468,w:37,h:43},
+  S52:{x:1101,y:498,w:35,h:38}, S53:{x:1085,y:535,w:36,h:36}, S54:{x:1061,y:551,w:39,h:44},
+  S55:{x:1036,y:573,w:37,h:41}, S56:{x:1008,y:590,w:36,h:40}, S57:{x:979,y:603,w:34,h:38},
+  S58:{x:948,y:612,w:33,h:35}, S59:{x:918,y:616,w:29,h:31}
 });
 Object.assign(stallRects,FALLBACK_RECTS);
 
 // Slide 3 — Flea Market stalls. Only FM1-FM36 are shown on the supplied slide.
-const fmCols=[202,247,570,615,949,994];
+const fmCols=[202,247,569,614,949,994];
 const fmRows=[297,331,365,399,433,467];
 for(let block=0;block<3;block++){
   const base=block*12;
   for(let row=0;row<6;row++){
-    fmRects["FM"+(base+row+1)]={x:fmCols[block*2]+1,y:fmRows[row]+1,w:41,h:31};
-    fmRects["FM"+(base+row+7)]={x:fmCols[block*2+1]+1,y:fmRows[row]+1,w:41,h:31};
+    fmRects["FM"+(base+row+1)]={x:fmCols[block*2],y:fmRows[row],w:46,h:34};
+    fmRects["FM"+(base+row+7)]={x:fmCols[block*2+1],y:fmRows[row],w:46,h:34};
   }
 }
 
@@ -514,7 +513,16 @@ function renderMap(targetId,admin=false){const target=document.getElementById(ta
 function renderFMMap(targetId,admin=false){const target=document.getElementById(targetId);if(!target)return;target.innerHTML="";target.style.position="relative";target.style.width=FM_MAP_W*mapZoom+"px";target.style.height=FM_MAP_H*mapZoom+"px";const img=createMapImage(FM_MAP_DATA,FM_MAP_W,FM_MAP_H);img.style.transform=`scale(${mapZoom})`;img.style.transformOrigin="top left";target.appendChild(img);const layer=document.createElement("div");layer.style.position="absolute";layer.style.inset="0";layer.style.transform=`scale(${mapZoom})`;layer.style.transformOrigin="top left";target.appendChild(layer);FM.forEach(stall=>{const r=fmRects[stall.id];if(r)addStallOverlay(layer,stall,r,admin)});}
 function zoomMap(f){mapZoom=Math.max(.55,Math.min(1.5,mapZoom*f));if(session?.role==="admin"){renderMap("adminMapStage",true);renderFMMap("adminFMMapStage",true)}else{renderMap("vendorMapStage");renderFMMap("vendorFMMapStage")}}
 function resetZoom(){mapZoom=1;if(session?.role==="admin"){renderMap("adminMapStage",true);renderFMMap("adminFMMapStage",true)}else{renderMap("vendorMapStage");renderFMMap("vendorFMMapStage")}}
-function selectStall(stallId){if(isBooked(stallId))return;selectedStall=stallId;renderMap("vendorMapStage");renderFMMap("vendorFMMapStage");const stall=allStalls().find(s=>s.id===stallId),v=currentVendor();openConfirmModal(v,stall)}
+function selectStall(stallId){
+  if(isBooked(stallId)||isBlocked(stallId))return;
+  const stall=allStalls().find(s=>s.id===stallId),v=currentVendor();
+  if(!stall)return;
+  if(!v){alert("Your vendor details are still loading. Please wait a moment and try again.");return;}
+  selectedStall=stallId;
+  renderMap("vendorMapStage");
+  renderFMMap("vendorFMMapStage");
+  openConfirmModal(v,stall);
+}
 function showBookedStallInfo(stallId){const booking=getBooking(stallId);if(!booking)return;document.getElementById("modalRoot").innerHTML=`<div class="modal-backdrop"><div class="modal"><h3>Stall ${esc(stallId)} — Already Booked</h3><p class="muted">This stall is unavailable for booking, but you can see what the vendor is selling.</p><div class="summary"><div><small>Vendor / business</small><strong>${esc(booking.business)}</strong></div><div><small>Contact person</small><strong>${esc(booking.contact)}</strong></div><div class="selling-info"><small>WHAT THIS VENDOR IS SELLING</small><strong>${esc(booking.sell)}</strong></div><div><small>Stall type</small><strong>${esc(booking.size)}</strong></div></div><div class="notice">🔴 Booked stalls cannot be selected. Tap another green stall to make your own booking.</div><div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal()">Close</button></div></div></div>`}
 function openConfirmModal(v,stall){const sizeOptions=stall.type==="S"?`<div class="field"><label>Stall type *</label><select id="confirmSize"><option value="5x3M">5x3M</option><option value="5x10M">5x10M</option></select></div>`:`<div class="field"><label>Stall type</label><input value="3x3M" disabled></div>`;document.getElementById("modalRoot").innerHTML=`<div class="modal-backdrop"><div class="modal"><h3>Confirm stall booking</h3><p class="muted">Please check all information before saving. Stall <b>${esc(stall.label)}</b> will become unavailable after confirmation.</p><div class="summary"><div><small>Vendor / business</small><strong>${esc(v.business)}</strong></div><div><small>Contact person</small><strong>${esc(v.contact)}</strong></div><div><small>Phone number</small><strong>${esc(v.phone)}</strong></div><div><small>What they sell</small><strong>${esc(v.sell)}</strong></div><div><small>Selected stall</small><strong>${esc(stall.label)}</strong></div></div>${sizeOptions}<div class="notice">The live database will check the stall again at the moment of confirmation. This prevents two vendors from booking the same stall.</div><div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="confirmBooking('${stall.id}')">Confirm & Book Stall</button></div></div></div>`}
 function closeModal(){document.getElementById("modalRoot").innerHTML="";selectedStall=null;if(session?.role==="vendor"){renderMap("vendorMapStage");renderFMMap("vendorFMMapStage")}}
