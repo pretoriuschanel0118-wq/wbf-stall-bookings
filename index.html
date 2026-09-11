@@ -1,4 +1,6 @@
-<html lang="en"><head>
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Wees Bees Fees 2026 | Vendor Stall Booking</title>
@@ -22,6 +24,7 @@ input{width:100%;padding:12px;border:1px solid #cbd5d1;border-radius:10px;margin
 .map-wrap{overflow:auto;border-radius:14px;background:#0877bc;padding:4px;-webkit-overflow-scrolling:touch}
 .map-stage{position:relative;width:100%;max-width:1601px;min-width:720px;margin:auto;line-height:0}
 .map-stage img{display:block;width:100%;height:auto;border-radius:10px;user-select:none}
+.map-compass{position:absolute;right:14px;top:14px;width:76px;height:76px;border-radius:50%;background:#fffffff2;border:3px solid #173127;box-shadow:0 3px 12px #0005;z-index:20;pointer-events:none;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;line-height:1;color:#173127;text-align:center}.map-compass .n{position:absolute;top:4px;left:50%;transform:translateX(-50%);color:#dc2626}.map-compass .s{position:absolute;bottom:4px;left:50%;transform:translateX(-50%)}.map-compass .e{position:absolute;right:5px;top:50%;transform:translateY(-50%)}.map-compass .w{position:absolute;left:5px;top:50%;transform:translateY(-50%)}.map-compass .needle{width:4px;height:48px;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:linear-gradient(to bottom,#dc2626 0 50%,#173127 50% 100%);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
 .stall{position:absolute;transform:translate(0,0);border:1px solid transparent;background:transparent;padding:0;z-index:5;min-width:10px;min-height:10px;border-radius:2px;line-height:1}
 .stall:hover{background:#ffffff55;border-color:#fff;box-shadow:0 0 0 2px #fff}
 .stall.booked{background:#dc2626dd;border:2px solid #7f1d1d;cursor:not-allowed}
@@ -59,7 +62,7 @@ h2,h3{margin-top:0}
 <body>
 <header>
   <h1>🚜 WEES BEES FEES 2026</h1>
-  <p>Vendor Stall Booking • C Hockey &amp; A Rugby</p>
+  <p>Vendor Stall Booking • C Hockey & A Rugby</p>
 </header>
 
 <div class="container">
@@ -319,6 +322,16 @@ function typeText(s) {
   return s.power_available?"S stall • Power can be provided":"S stall • No power provision";
 }
 
+function addCompass(stageId) {
+  const stage=$(stageId);
+  if(!stage || stage.querySelector(".map-compass")) return;
+  const compass=document.createElement("div");
+  compass.className="map-compass";
+  compass.setAttribute("aria-label","Map compass: North is up");
+  compass.innerHTML=`<span class="n">N</span><span class="e">E</span><span class="s">S</span><span class="w">W</span><span class="needle"></span>`;
+  stage.appendChild(compass);
+}
+
 function addHotspots(stageId, positions, onlyType) {
   const stage=$(stageId);
   stage.querySelectorAll(".stall").forEach(x=>x.remove());
@@ -349,11 +362,15 @@ function addHotspots(stageId, positions, onlyType) {
 }
 
 function renderVendorMaps() {
+  addCompass("sStage");
+  addCompass("fmStage");
   addHotspots("sStage",S_POSITIONS,"S");
   addHotspots("fmStage",FM_POSITIONS,"FM");
 }
 
 function renderAdminMaps() {
+  addCompass("adminSStage");
+  addCompass("adminFMStage");
   addHotspots("adminSStage",S_POSITIONS,"S");
   addHotspots("adminFMStage",FM_POSITIONS,"FM");
 }
@@ -481,5 +498,5 @@ async function logout(){await db.auth.signOut();location.reload();}
   if(session) await loadSession();
 })();
 </script>
-
-</body></html>
+</body>
+</html>
